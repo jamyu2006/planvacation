@@ -13,6 +13,8 @@ app.use(express.json())
 app.use(express.static("assets"));
 
 
+
+
 //allows server to listen on port 1111 on local network ip
 app.listen(1111, "0.0.0.0", () => {
     console.log("Running.......")
