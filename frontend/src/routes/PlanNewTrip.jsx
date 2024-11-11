@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api";
+import axios from 'axios';
 
 const PlanNewTrip = () => {
     const { isLoaded } = useJsApiLoader({
@@ -11,9 +12,13 @@ const PlanNewTrip = () => {
     const navigate = useNavigate();
 
     const [title, setTitle] = useState('');
+    const [uuid, setUuid] = useState(null);
     const [spot, setSpot] = useState('');
     const [spots, setSpots] = useState([]);
     const [searchBox, setSearchBox] = useState(null);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState('');
+    
 
     const handleAddSpot = () => {
         if (spot) {
@@ -22,8 +27,39 @@ const PlanNewTrip = () => {
         }
     };
 
+    useEffect(() => {
+        axios.get("http://localhost:1111/getinfo")
+            .then((response) => {
+                setUuid(response.data.uuid);
+                setLoading(false);
+            })
+            .catch(error => {
+                console.error("Error fetching info:", error);
+                setLoading(false);
+            });
+    }, []);
+
     const handleSaveAndReturn = () => {
-        navigate('/');
+        const tripInfo = {
+            uuid: uuid,
+            tripname: title,
+            defaultlocation: "commack",
+            defaultaddress: "commack",
+            triplocations: spots
+        };
+
+        axios.post("http://localhost:1111/createTrip", tripInfo)
+            .then((response) => {
+                if (response.data) {
+                    navigate("/home");
+                } else {
+                    setError("Combo doesn't exist");
+                }
+            })
+            .catch(error => {
+                console.error("Error creating trip:", error);
+                setError("There was an error saving your trip.");
+            });
     };
 
     const handleSearchLoad = (searchBox) => {
@@ -42,7 +78,7 @@ const PlanNewTrip = () => {
         }
     };
 
-    if (!isLoaded) {
+    if (loading || !isLoaded) {
         return <div>Loading...</div>;
     }
 
@@ -77,6 +113,7 @@ const PlanNewTrip = () => {
                 ))}
             </div>
 
+            {error && <div className="error-message">{error}</div>}
             <button onClick={handleSaveAndReturn}>Save Trip & Return to Home</button>
         </div>
     );

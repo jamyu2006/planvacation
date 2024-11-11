@@ -20,10 +20,10 @@ const Login = () => {
 
     const handleSubmit = (event) => {
         event.preventDefault();
-        axios.post("http://localhost:3000/createUser", info)
+        axios.post("http://localhost:1111/authenticateUser", info)
         .then((response) => {
-            if (response.data){
-                console.log(response.data);
+            if (response.data.success){
+                navigate("/home");
             } else {
                 setError("combo doesn't exist");
             }
@@ -34,7 +34,7 @@ const Login = () => {
     return(
         <div className='login'>
             <div className='loginmessage'>
-                <h1>MEME MEDIA</h1>
+                <h1>PlanVacation</h1>
             </div>
             <div className='loginform'>
                 <form onSubmit={handleSubmit}>

@@ -20,10 +20,10 @@ const Signup = () => {
         event.preventDefault();
         const { email, username, password, confirm } = info;
         if ((email.length > 0) && (username.length > 0) && (password.length > 5) && (password === confirm)) {
-            axios.post("http://localhost:3000/createUser", info)
+            axios.post("http://localhost:1111/createUser", info)
                 .then((response) => {
-                    if (response.data) {
-                       console.log(response.data);
+                    if (response.data.success) {
+                       navigate('/home');
                     } else {
                         setError("This email has already been registered, or the username was taken");
                     }

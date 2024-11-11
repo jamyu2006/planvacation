@@ -1,20 +1,9 @@
 import { useNavigate } from 'react-router-dom';
 import { useEffect } from 'react';
+import {Link} from 'react-router-dom';
 
 const Root = () => {
   const navigate = useNavigate();
-
-  const handlePlanNewTrip = () => {
-    navigate("/plan-new-trip");
-  };
-
-  const handleViewOldTrips = () => {
-    navigate("/view-old-trips");
-  };
-
-  const handleLogin = () => {
-    navigate("/login");
-  }
 
   const handleSignup = () => {
     navigate("/signup");
@@ -40,10 +29,8 @@ const Root = () => {
         <p>Access live data on traffic, transportation schedules, and more.</p>
       </div>
       <div className="root-options">
-        <button onClick={handleLogin}>Login</button>
-        <button onClick={handleSignup}>Signup</button>
-        <button onClick={handlePlanNewTrip}>Plan a New Trip</button>
-        <button onClick={handleViewOldTrips}>View Existing Trips</button>
+        <button onClick={handleSignup}>Sign up</button><br></br><br></br>
+        Already started? <Link to="/login">Log in</Link> to see your saved trips.<br></br>
       </div>
     </div>
   );

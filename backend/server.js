@@ -3,10 +3,8 @@ const express = require("express")
 const cors = require("cors")
 const session = require("express-session")
 const app = express();
-const { MongoClient, ServerApiVersion } = require('mongodb');
-const uuidv4 = require('uuid').v4
+const endpoint = require('./endpoints')
 
-let users = {}
 
 /*
 const { getJson } = require("serpapi");
@@ -28,124 +26,108 @@ getJson({
 //middleware
 app.use(cors({ origin: ["http://localhost:5173"], methods: ["POST", "GET"], credentials: true }))
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ secret: "secret", resave: false, saveUninitialized: false }))
+app.use(session({ secret: "abcdef", resave: false, saveUninitialized: false }))
 app.use(express.json())
 app.use(express.static("assets"));
 
-// Create a MongoClient with a MongoClientOptions object to set the Stable API version
-const client = new MongoClient(uri, {
-  serverApi: {
-    version: ServerApiVersion.v1,
-    strict: true,
-    deprecationErrors: true,
+endpoint.testConnection().catch(console.dir)
+
+//request => 
+app.post("/deleteDatabases", async (request, response) => {
+  try {
+    const {adminkey} = request.body
+    endpoint.deleteAllDatabases(adminkey)
+
+    return response.json({ success: true });
+  } catch (error) {
+    console.error("Error in /deleteDatabases route:", error);
+    return response.json({ success: false, message: "Could not create user" });
   }
 });
 
-async function testConnection() {
-  try {
-    // Connect the client to the server	(optional starting in v4.7)
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    //await client.close();
-  }
-}
-testConnection().catch(console.dir)
-
-async function getMovie(int) {
-  try {
-    const database = client.db("sample_mflix");
-    const movies = database.collection("movies");
-    const query = { title: "The Room" };
-    const options = {
-      // Sort matched documents in descending order by rating
-      sort: { "imdb.rating": -1 },
-      // Include only the `title` and `imdb` fields in the returned document
-      projection: { _id: 0, title: 1, imdb: 1 },
-    };
-    // Execute query
-    const movie = await movies.findOne(query, options);
-    // Print the document returned by findOne()
-    console.log(movie, int)
-    return movie;
-  } finally {
-    // Ensures that the client will close when you finish/error
-    //await client.close();
-  }
-}
-
-async function createUser(username, email, password) {
-  try { 
-    const existingUser = Object.values(users).find(user => user.email === email);
-    if (existingUser) {
-      console.log("User with this email already exists.");
-      return null;
-    }
-    
-    const uuid = uuidv4()
-
-    users[uuid] = { username, email, password }
-    console.log("create user: ",users[uuid])
-
-    const db = client.db(uuid);
-    const collection = db.collection('info')
-
-    const result = await collection.insertOne({ username: username, email: email, password:password });
-
-    console.log('created database', uuid);
-    console.log('Inserted document with ID:', result.insertedId);
-    return uuid;
-  } catch (error) {
-    console.error("Error creating user:", error);
-    throw error;
-  }
-}
 //request => username, email, password
 app.post("/createUser", async (request, response) => {
   try {
-    const username = request.body.username;
-    const email = request.body.email;
-    const password = request.body.password;
-    console.log("received ping", request.body.email)
+    const { username, email, password } = request.body;
+    const uuid = await endpoint.createUser(username, email, password);
 
-    const uuid = await createUser(username, email, password)
-
-    console.log("createUser:", uuid)
-    return response.json(uuid)
-  } catch {
-    console.log("could not create user")
+    // Check if the user was successfully created
+    if (uuid) {
+      request.session.username = username;
+      request.session.uuid = uuid;
+      return response.json({ message: uuid, success: true });
+    }
+    
+    return response.json({ success: false });
+  } catch (error) {
+    console.error("Error in /createUser route:", error);
+    return response.json({ success: false, message: "Could not create user" });
   }
-})
-//request => username, email, password
-app.post("/createTrip", async (request, response) => {
-  try {
-    const username = request.body.username;
-    const email = request.body.email;
-    const password = request.body.password;
+});
 
-    const uuid = await createUser(username, email, password)
-
-    console.log("createUser:", uuid)
-    return response.json(uuid)
-  } catch {
-    console.log("could not create user")
-  }
-})
-
+//request => email, password
 app.post("/authenticateUser", async (request, response) => {
   try {
+    const { email, password } = request.body;
+    const isVerified = await endpoint.authenticateUser(email, password);
+    console.log("isVerified: ", isVerified);
 
-    console.log("authenticateUser:", request)
-  } catch {
+    response.json({ success: isVerified });  // Send success=true if authenticated, else false
+  } catch (error) {
+    console.error("Error in /authenticateUser:", error);
+    response.status(500).json({ success: false, message: "Server error" });
+  }
+});
 
+//request => uuid, tripname, defaultlocation, defaultaddress, triplocations [] 
+app.post("/createTrip", async (request, response) => {
+  try {
+    const { uuid, tripname, defaultlocation, defaultaddress, triplocations} = request.body;
+
+    console.log(tripname);
+    console.log(triplocations);
+
+    const createdTrip = endpoint.createTrip(uuid, tripname, defaultlocation, defaultaddress, triplocations)
+
+    if(!createdTrip){
+      throw error
+    }
+    
+    return response.json(uuid)
+  } catch (error) {
+    console.log("could not create trip")
+    throw error
   }
 })
 
+//request => uuid, tripname/trip id??, location_name, address
+app.post("/createLocation", async (request, response) => {
+  try {
+    //trip id???
+    const { uuid, tripname, locationname, address } = request.body;
+
+    const createdTrip = endpoint.createLocation(uuid, tripname, locationname, address)
+
+    if(!createdTrip){
+      throw error
+    }
+    
+    return response.json(uuid)
+  } catch (error) {
+    console.log("could not create trip")
+    throw error
+  }
+})
+
+app.get('/getinfo', (request, response) => {
+  console.log("retrieved info")
+  return response.json({ user: request.session.username, email: request.session.email, uuid: request.session.uuid});
+})
+
+
+
 //allows server to listen on port 3000 on local network ip
-app.listen(3000, "0.0.0.0", () => {
+app.listen(1111, "0.0.0.0", () => {
   console.log("Running.......")
 });
 

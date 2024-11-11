@@ -1,18 +1,18 @@
 import { createBrowserRouter, RouterProvider, createRoutesFromElements, Route } from 'react-router-dom';
 import Root from './routes/root';
 import PlanNewTrip from './routes/PlanNewTrip';
-import ViewOldTrips from './routes/ViewOldTrips';
 import Login from './routes/Login';
 import Signup from './routes/Signup';
+import HomePage from './routes/HomePage';
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <>
       <Route path="/" element={<Root />} />
       <Route path="plan-new-trip" element={<PlanNewTrip />} />
-      <Route path="view-old-trips" element={<ViewOldTrips />} />
       <Route path="login" element={<Login/>}/>
       <Route path='signup' element={<Signup/>}/>
+      <Route path="home" element={<HomePage/>}/>
     </>
   )
 );
