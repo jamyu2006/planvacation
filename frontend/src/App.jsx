@@ -4,6 +4,8 @@ import PlanNewTrip from './routes/PlanNewTrip';
 import Login from './routes/Login';
 import Signup from './routes/Signup';
 import HomePage from './routes/HomePage';
+import "./Styles.css"
+
 
 const router = createBrowserRouter(
   createRoutesFromElements(

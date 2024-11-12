@@ -46,7 +46,7 @@ const Signup = () => {
                     <input type="password" name="password" placeholder='create password' onChange={handleChange} /><br></br>
                     <input type="password" name="confirm" placeholder='confirm password' onChange={handleChange} /><br></br>
                     <input type="submit" value="CREATE ACCOUNT" /><br></br>
-                    <Link to="/">Already have an account</Link><br></br>
+                    <Link to="/login">Already have an account</Link><br></br>
                     <label>{error}</label>
                 </form>
             </div>

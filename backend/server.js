@@ -54,6 +54,7 @@ app.post("/createUser", async (request, response) => {
     // Check if the user was successfully created
     if (uuid) {
       request.session.username = username;
+      request.session.email = email;
       request.session.uuid = uuid;
       return response.json({ message: uuid, success: true });
     }
@@ -70,9 +71,10 @@ app.post("/authenticateUser", async (request, response) => {
   try {
     const { email, password } = request.body;
     const isVerified = await endpoint.authenticateUser(email, password);
-    console.log("isVerified: ", isVerified);
-
-    response.json({ success: isVerified });  // Send success=true if authenticated, else false
+    request.session.username = isVerified.username;
+    request.session.uuid = isVerified.uuid;
+    request.session.email = isVerified.email;
+    response.json({success: isVerified.success}); 
   } catch (error) {
     console.error("Error in /authenticateUser:", error);
     response.status(500).json({ success: false, message: "Server error" });
@@ -83,7 +85,6 @@ app.post("/authenticateUser", async (request, response) => {
 app.post("/createTrip", async (request, response) => {
   try {
     const { uuid, tripname, defaultlocation, defaultaddress, triplocations} = request.body;
-
     console.log(tripname);
     console.log(triplocations);
 
@@ -120,10 +121,20 @@ app.post("/createLocation", async (request, response) => {
 })
 
 app.get('/getinfo', (request, response) => {
-  console.log("retrieved info")
   return response.json({ user: request.session.username, email: request.session.email, uuid: request.session.uuid});
 })
 
+app.get('/logoutuser', (request, response) => {
+  request.session.username = null;
+  request.session.email = null;
+  request.session.uuid = null;
+  return response.json({success: true});
+})
+
+app.get("/getoldtrips", (request, response) => {
+  const oldtrips = endpoint.getOldTrips(request.session.uuid);
+  return response.json({oldtrips: oldtrips});
+})
 
 
 //allows server to listen on port 3000 on local network ip

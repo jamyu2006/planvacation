@@ -1,10 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
 import {Link} from 'react-router-dom';
+import { useEffect } from 'react';
+import useAuth from '../hooks/useAuth';
 
 const Root = () => {
   const navigate = useNavigate();
-
+  const [username, email, uuid] = useAuth();
   const handleSignup = () => {
     navigate("/signup");
   }

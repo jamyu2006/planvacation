@@ -1,13 +1,13 @@
 import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import useAuth from "../hooks/useAuth";
+import { useEffect, useState} from "react";
 
 axios.defaults.withCredentials = true;
 
 const HomePage = () => {
-    const [username, setUsername] = useState('');
-    const [email, setEmail] = useState('');
-    const [loading, setLoading] = useState(true);
+    const [username, email, uuid] = useAuth();
+    const [oldTrips, setOldTrips] = useState([]);
     const navigate = useNavigate();
 
     const handlePlanNewTrip = () => {
@@ -15,19 +15,29 @@ const HomePage = () => {
     }
 
     useEffect(() => {
-        axios.get("http://localhost:1111/getinfo")
+        axios.get("http://localhost:1111/getoldtrips")
         .then((response) => {
-            setUsername(response.data.user);
-            setEmail(response.data.email);
-            setLoading(false);
+            setOldTrips(response.data.oldtrips);
+            console.log(response.data.oldtrips);
         })
-        .catch(error => {
-            console.error("Error fetching info:", error);
-            setLoading(false);
-        });
-    }, []);
+        .catch((error) => {
+            console.log(error);
+        })
+    }, [])
 
-    if (loading) {
+    const handleLogout = () => {
+        axios.get("http://localhost:1111/logoutuser")
+        .then((response)=>{
+            if (response.data.success) {
+                navigate("/")
+            }
+        })
+        .catch((error) => {
+            console.log(error);
+        })
+    }
+
+    if (!username) {
         return <div>Loading...</div>;
     }
 
@@ -39,6 +49,7 @@ const HomePage = () => {
             </div>
             <div className="options">
                 <button onClick={handlePlanNewTrip}>Plan New Trip</button>
+                <button onClick={handleLogout}>Logout</button>
             </div>
         </div>
     );

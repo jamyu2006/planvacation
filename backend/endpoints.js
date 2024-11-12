@@ -100,11 +100,11 @@ async function authenticateUser(email, password) {
                     console.log("Found password in database: ", dbUser.password, password);
 
                     if (password === dbUser.password) {
-                        return true;
+                        return {success: true, username: dbUser.username, email: dbUser.email, uuid: uuid};
                     }
                 }
             }
-            return false;
+            return {success: false};
         })();
 
         return userExists;  // Return true if user is authenticated, otherwise false
@@ -152,4 +152,16 @@ async function createLocation(uuid, tripname, locationname, address) {
     }
 }
 
-module.exports = {testConnection, deleteAllDatabases, createUser, createTrip, createLocation, authenticateUser}
+async function getOldTrips(uuid) {
+    try {
+        const db = client.db(uuid);
+        const collections = await db.listCollections().toArray();
+        const trips = collections.filter(collection => collection.name != "info");
+        return trips;
+    } catch (error) {
+        console.error("Error finding old trips:", error);
+        return [];
+    }
+}
+
+module.exports = {testConnection, deleteAllDatabases, createUser, createTrip, createLocation, authenticateUser, getOldTrips}

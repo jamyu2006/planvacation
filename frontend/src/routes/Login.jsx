@@ -1,6 +1,7 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
+import useAuth from '../hooks/useAuth';
 import axios from 'axios';
 
 axios.defaults.withCredentials = true;
@@ -8,9 +9,9 @@ axios.defaults.withCredentials = true;
 
 const Login = () => {
     const [info, setInfo] = useState({email: "", password: ""});
+    const [username, email, uuid] = useAuth();
     const [error, setError] = useState('');
     const navigate = useNavigate();
-
 
     const handleChange = (event) => {
         const type = event.target.name;
