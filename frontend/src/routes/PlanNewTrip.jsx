@@ -1,4 +1,3 @@
-// PlanNewTrip.js
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { StandaloneSearchBox, useJsApiLoader } from "@react-google-maps/api";
@@ -17,28 +16,26 @@ const PlanNewTrip = () => {
     });
     const navigate = useNavigate();
     const [username, email, uuid] = useAuth();
-    const [searchBox, setSearchBox] = useState(null);
+    const [defaultSearchBox, setDefaultSearchBox] = useState(null);
+    const [exploreSearchBox, setExploreSearchBox] = useState(null);
     const [error, setError] = useState('');
-    const [location, setLocation] = useState('');
+    const [defaultLocationInput, setDefaultLocationInput] = useState('');
+    const [locationInput, setLocationInput] = useState('');
     const [info, setInfo] = useState({
         uuid: '',
         tripname: '',
         defaultlocation: '',
-        defaultaddress: '',
         triplocations: [],
     });
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setInfo((prevInfo) => ({
-            ...prevInfo,
-            [name]: value,
-        }));
-    };
-
-    const handleLocationChange = (event) => {
-        const { name, value } = event.target;
-        setLocation(value);
+        if (name === "tripname") {
+            setInfo((prevInfo) => ({
+                ...prevInfo,
+                tripname: value,
+            }));
+        }
     };
 
     const handleSaveAndReturn = () => {
@@ -46,8 +43,7 @@ const PlanNewTrip = () => {
             .then((response) => {
                 if (response.data) {
                     navigate("/home");
-                } 
-                else {
+                } else {
                     setError("something has been left blank");
                 }
             })
@@ -56,21 +52,31 @@ const PlanNewTrip = () => {
             });
     };
 
-    const handleSearchLoad = (searchBox) => {
-        setSearchBox(searchBox);
+    const handleDefaultLocationPlacesChanged = () => {
+        if (defaultSearchBox && defaultSearchBox.getPlaces) {
+            const places = defaultSearchBox.getPlaces();
+            const place = places[0];
+            const formattedPlace = { name: place.name, address: place.formatted_address };
+            setInfo((prevInfo) => ({
+                ...prevInfo,
+                uuid: uuid,
+                defaultlocation: formattedPlace
+            }));
+            setDefaultLocationInput(formattedPlace.name);
+        }
     };
 
     const handlePlacesChanged = () => {
-        if (searchBox && searchBox.getPlaces) {
-            const places = searchBox.getPlaces();
+        if (exploreSearchBox && exploreSearchBox.getPlaces) {
+            const places = exploreSearchBox.getPlaces();
             const place = places[0];
-            const formattedPlace = {name: place.name, address: place.formatted_address};
-            setLocation(formattedPlace.name);
+            const formattedPlace = { name: place.name, address: place.formatted_address };
             setInfo((prevInfo) => ({
                 ...prevInfo,
                 uuid: uuid,
                 triplocations: [...prevInfo.triplocations, formattedPlace],
             }));
+            setLocationInput('');
         }
     };
 
@@ -89,17 +95,26 @@ const PlanNewTrip = () => {
                 onChange={handleChange}
                 placeholder="Trip Title"
             />
-            <h2>Add locations to explore, include all stops</h2>
-            <StandaloneSearchBox onLoad={handleSearchLoad} onPlacesChanged={handlePlacesChanged}>
+            <h2>Enter your current location</h2>
+            <StandaloneSearchBox onLoad={setDefaultSearchBox} onPlacesChanged={handleDefaultLocationPlacesChanged}>
                 <input
                     type="text"
-                    name="location"
-                    value={location}
-                    onChange={handleLocationChange}
+                    value={defaultLocationInput}
+                    onChange={(e) => setDefaultLocationInput(e.target.value)}
+                    placeholder="Search for a location"
+                />
+            </StandaloneSearchBox>
+            <h2>Add locations to explore, include all stops</h2>
+            <StandaloneSearchBox onLoad={setExploreSearchBox} onPlacesChanged={handlePlacesChanged}>
+                <input
+                    type="text"
+                    value={locationInput}
+                    onChange={(e) => setLocationInput(e.target.value)}
                     placeholder="Search for a location"
                 />
             </StandaloneSearchBox>
             <div className="PlanNewTrip-locations">
+                {<h3>{info.defaultlocation.name}</h3>}
                 {info.triplocations.map((location, index) => (
                     <h3 key={index}>{location.name} - {location.address}</h3>
                 ))}

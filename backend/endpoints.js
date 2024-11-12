@@ -114,49 +114,36 @@ async function authenticateUser(email, password) {
     }
 }
 
-async function createTrip(uuid, tripname, defaultlocation, defaultaddress, triplocations) {
+async function createTrip(uuid, tripname, defaultlocation, triplocations) {
     try {
         const db = client.db(uuid);
         const collection = db.collection(tripname);
 
-        const result = await collection.insertOne({ locationname: defaultlocation, address: defaultaddress });
+        const result = await collection.insertOne({ locationname: defaultlocation.name, address: defaultlocation.address });
         console.log('Inserted document with ID:', result.insertedId);
-
-        for (const location of triplocations) {
+        
+        await Promise.all(triplocations.map(async (location) => {
             const locationResult = await collection.insertOne({
-                locationname: location.locationname,
+                locationname: location.name,
                 address: location.address
             });
             console.log('Inserted additional location with ID:', locationResult.insertedId);
-        }
+        }));
 
         return true;
     } catch (error) {
-        console.error("Error in authenticateUser:", error);
+        console.error("Error in createTrip:", error);
         return false;
     }
 }
 
-async function createLocation(uuid, tripname, locationname, address) {
-    try {
-        const db = client.db(uuid);
-        const collection = db.collection(tripname);
-
-        const result = await collection.insertOne({ locationname: locationname, address: address });
-        console.log('Inserted document with ID:', result.insertedId);
-
-        return true;
-    } catch (error) {
-        console.error("Error in authenticateUser:", error);
-        return false;
-    }
-}
 
 async function getOldTrips(uuid) {
     try {
         const db = client.db(uuid);
         const collections = await db.listCollections().toArray();
         const trips = collections.filter(collection => collection.name != "info");
+        console.log("here are the trips: " + trips);
         return trips;
     } catch (error) {
         console.error("Error finding old trips:", error);
@@ -164,4 +151,4 @@ async function getOldTrips(uuid) {
     }
 }
 
-module.exports = {testConnection, deleteAllDatabases, createUser, createTrip, createLocation, authenticateUser, getOldTrips}
+module.exports = {testConnection, deleteAllDatabases, createUser, createTrip, authenticateUser, getOldTrips}

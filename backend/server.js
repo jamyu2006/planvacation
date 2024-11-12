@@ -4,6 +4,7 @@ const cors = require("cors")
 const session = require("express-session")
 const app = express();
 const endpoint = require('./endpoints')
+require('dotenv').config()
 
 
 /*
@@ -26,7 +27,7 @@ getJson({
 //middleware
 app.use(cors({ origin: ["http://localhost:5173"], methods: ["POST", "GET"], credentials: true }))
 app.use(express.urlencoded({ extended: true }))
-app.use(session({ secret: "abcdef", resave: false, saveUninitialized: false }))
+app.use(session({ secret: process.env.TOKEN_SECRET, resave: false, saveUninitialized: false }))
 app.use(express.json())
 app.use(express.static("assets"));
 
@@ -84,30 +85,11 @@ app.post("/authenticateUser", async (request, response) => {
 //request => uuid, tripname, defaultlocation, defaultaddress, triplocations [] 
 app.post("/createTrip", async (request, response) => {
   try {
-    const { uuid, tripname, defaultlocation, defaultaddress, triplocations} = request.body;
+    const { uuid, tripname, defaultlocation, triplocations} = request.body;
     console.log(tripname);
     console.log(triplocations);
 
-    const createdTrip = endpoint.createTrip(uuid, tripname, defaultlocation, defaultaddress, triplocations)
-
-    if(!createdTrip){
-      throw error
-    }
-    
-    return response.json(uuid)
-  } catch (error) {
-    console.log("could not create trip")
-    throw error
-  }
-})
-
-//request => uuid, tripname/trip id??, location_name, address
-app.post("/createLocation", async (request, response) => {
-  try {
-    //trip id???
-    const { uuid, tripname, locationname, address } = request.body;
-
-    const createdTrip = endpoint.createLocation(uuid, tripname, locationname, address)
+    const createdTrip = await endpoint.createTrip(uuid, tripname, defaultlocation, triplocations)
 
     if(!createdTrip){
       throw error
@@ -131,8 +113,8 @@ app.get('/logoutuser', (request, response) => {
   return response.json({success: true});
 })
 
-app.get("/getoldtrips", (request, response) => {
-  const oldtrips = endpoint.getOldTrips(request.session.uuid);
+app.get("/getoldtrips", async (request, response) => {
+  const oldtrips = await endpoint.getOldTrips(request.session.uuid);
   return response.json({oldtrips: oldtrips});
 })
 

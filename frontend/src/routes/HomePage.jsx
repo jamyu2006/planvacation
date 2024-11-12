@@ -17,8 +17,8 @@ const HomePage = () => {
     useEffect(() => {
         axios.get("http://localhost:1111/getoldtrips")
         .then((response) => {
-            setOldTrips(response.data.oldtrips);
-            console.log(response.data.oldtrips);
+            setOldTrips(response.data);
+            console.log(response.data);
         })
         .catch((error) => {
             console.log(error);
