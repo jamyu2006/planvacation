@@ -15,6 +15,22 @@ const Home = () => {
         navigate('/create-trip');
     }
 
+    const handleDelete = (index) => {
+        console.log(index);
+        axios.post("http://localhost:1111/deleteTrip", {index: index})
+        .then((response) => {
+            if (response.data){
+                const prevOldTrips = [...oldTrips];
+                prevOldTrips.splice(index, 1);
+                setOldTrips(prevOldTrips);
+            } 
+            else {
+                alert("Unable to delete this trip")
+            }
+        })
+        .catch(error => console.error("Error fetching info:", error));
+    }
+
     useEffect(() => {
         axios.get("http://localhost:1111/getoldtrips")
         .then((response) => {
@@ -56,11 +72,14 @@ const Home = () => {
             </div>
             {/* have a see all trips and shit as a child component that can display, or root */}
             <div>
-                {oldTrips.map((element) => {
+                {oldTrips.map((element, index) => {
                     return(
-                        <TripBox 
-                            tripInformation={element} 
-                        />
+                        <div className="trip-box-container">
+                            <TripBox 
+                                tripInformation={element} 
+                            />
+                            <button onClick={() => handleDelete(index)}>Delete Trip</button>
+                        </div>
                     )
                 })}
             </div>  

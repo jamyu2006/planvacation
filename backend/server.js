@@ -95,6 +95,18 @@ app.post("/createTrip", async (request, response) => {
     }
 })
 
+app.post("/deleteTrip", async (request, response) => {
+    try {
+        const index = request.body.index;
+        const deleted = await endpoint.deleteTrip(request.session.email, index);
+        response.json(deleted);
+    }
+    catch (error){
+        console.log(error);
+        response.json(false);
+    }
+})
+
 app.get('/getinfo', (request, response) => {
     return response.json({username: request.session.username, email: request.session.email});
 })
@@ -110,7 +122,6 @@ app.get("/getoldtrips", async (request, response) => {
         return response.json([]);
     }
     const oldtrips = await endpoint.getOldTrips(request.session.email);
-    console.log("server oldtrips: ", oldtrips)
     return response.json({oldtrips: oldtrips});
 })
 

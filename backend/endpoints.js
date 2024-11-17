@@ -96,6 +96,24 @@ async function createTrip(email, tripName, startingLocation, tripLocations) {
     }
 }
 
+async function deleteTrip(email, index) {
+    try {
+        const db = client.db("central_data");
+        const userCollection = db.collection("users");
+        const userData = await userCollection.findOne({ email: email });
+        const updatedTrips = userData.trips.filter((trip, i) => i !== index);
+        await userCollection.updateOne(
+            {email: email},
+            {$set: { trips: updatedTrips}}
+        );
+        return true;
+    }
+    catch (error) {
+        console.log("Error deleting a trip:", error);
+        return false;
+    }
+}
+
 
 async function getOldTrips(email) {
     try {
@@ -110,4 +128,4 @@ async function getOldTrips(email) {
     }
 }
 
-module.exports = {testConnection, deleteCentralDatabase, createUser, createTrip, authenticateUser, getOldTrips}
+module.exports = {testConnection, deleteCentralDatabase, createUser, createTrip, authenticateUser, getOldTrips, deleteTrip}
