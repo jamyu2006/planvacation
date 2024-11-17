@@ -2,10 +2,12 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
+import useAuth from '../hooks/useAuth';
 
 axios.defaults.withCredentials = true;
 
 const Signup = () => {
+    const [username, email] = useAuth();
     const [info, setInfo] = useState({ email: "", username: "", password: "", confirm: "" })
     const [error, setError] = useState('')
     const navigate = useNavigate();
@@ -19,7 +21,7 @@ const Signup = () => {
     const handleSubmit = (event) => {
         event.preventDefault();
         const { email, username, password, confirm } = info;
-        if ((email.length > 0) && (username.length > 0) && (password.length > 5) && (password === confirm)) {
+        if ((email.length > 0) && (username.length > 0) && (password.length > 0) && (password === confirm)) {
             axios.post("http://localhost:1111/createUser", info)
                 .then((response) => {
                     if (response.data.success) {
@@ -33,7 +35,6 @@ const Signup = () => {
             setError("You didn't enter an email/username, your password was too small, or it didn't match confirm")
         }
     }
-
     return (
         <div className='signup'>
             <div className='signupmessage'>

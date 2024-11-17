@@ -1,15 +1,14 @@
 import {useState} from 'react';
 import {Link} from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
-import useAuth from '../hooks/useAuth';
 import axios from 'axios';
+import useAuth from '../hooks/useAuth';
 
 axios.defaults.withCredentials = true;
 
-
 const Login = () => {
+    const [username, email] = useAuth();
     const [info, setInfo] = useState({email: "", password: ""});
-    const [username, email, uuid] = useAuth();
     const [error, setError] = useState('');
     const navigate = useNavigate();
 

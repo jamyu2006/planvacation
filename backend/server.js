@@ -34,94 +34,88 @@ app.use(express.static("assets"));
 endpoint.testConnection().catch(console.dir)
 
 //request => 
-app.post("/deleteDatabases", async (request, response) => {
-  try {
-    const {adminkey} = request.body
-    endpoint.deleteAllDatabases(adminkey)
-
-    return response.json({ success: true });
-  } catch (error) {
-    console.error("Error in /deleteDatabases route:", error);
-    return response.json({ success: false, message: "Could not create user" });
-  }
+app.post("/deleteDatabase", async (request, response) => {
+    try {
+        const {adminkey} = request.body
+        endpoint.deleteCentralDatabase(adminkey)
+        return response.json({ success: true });
+    } 
+    catch (error) {
+        console.error("Error in /deleteDatabases route:", error);
+        return response.json({ success: false, message: "Could not create user" });
+    }
 });
 
 //request => username, email, password
 app.post("/createUser", async (request, response) => {
-  try {
-    const { username, email, password } = request.body;
-    const uuid = await endpoint.createUser(username, email, password);
+    try {
+        const { username, email, password } = request.body;
+        const userCreated = await endpoint.createUser(username, email, password);
 
-    // Check if the user was successfully created
-    if (uuid) {
-      request.session.username = username;
-      request.session.email = email;
-      request.session.uuid = uuid;
-      return response.json({ message: uuid, success: true });
+        if (userCreated) {
+            request.session.username = username;
+            request.session.email = email;
+            return response.json({success: true});
+        }
+        return response.json({success: false});
+    } 
+    catch (error) {
+        console.error("Error in /createUser route:", error);
+        throw error;
     }
-    
-    return response.json({ success: false });
-  } catch (error) {
-    console.error("Error in /createUser route:", error);
-    return response.json({ success: false, message: "Could not create user" });
-  }
 });
 
 //request => email, password
 app.post("/authenticateUser", async (request, response) => {
-  try {
-    const { email, password } = request.body;
-    const isVerified = await endpoint.authenticateUser(email, password);
-    request.session.username = isVerified.username;
-    request.session.uuid = isVerified.uuid;
-    request.session.email = isVerified.email;
-    response.json({success: isVerified.success}); 
-  } catch (error) {
-    console.error("Error in /authenticateUser:", error);
-    response.status(500).json({ success: false, message: "Server error" });
-  }
+    try {
+        const { email, password } = request.body;
+        const isVerified = await endpoint.authenticateUser(email, password);
+        request.session.email = email;
+        request.session.username = isVerified.username;
+        return response.json({success: isVerified.success}); 
+    } 
+    catch (error) {
+        console.error("Error in /authenticateUser:", error);
+        response.status(500).json({ success: false, message: "Server error" });
+    }
 });
 
-//request => uuid, tripname, defaultlocation, defaultaddress, triplocations [] 
+//request => tripname, defaultlocation, defaultaddress, triplocations [] 
 app.post("/createTrip", async (request, response) => {
-  try {
-    const { uuid, tripname, defaultlocation, triplocations} = request.body;
-    console.log(tripname);
-    console.log(triplocations);
-
-    const createdTrip = await endpoint.createTrip(uuid, tripname, defaultlocation, triplocations)
-
-    if(!createdTrip){
-      throw error
+    try {
+        const {tripName, startingLocation, tripLocations} = request.body;
+        const createdTrip = await endpoint.createTrip(request.session.email, tripName, startingLocation, tripLocations)
+        if (createdTrip) {
+            return response.json(true);
+        }
+        return response.json(false);
+    } 
+    catch (error) {
+        console.log(error);
     }
-    
-    return response.json(uuid)
-  } catch (error) {
-    console.log("could not create trip")
-    throw error
-  }
 })
 
 app.get('/getinfo', (request, response) => {
-  return response.json({ user: request.session.username, email: request.session.email, uuid: request.session.uuid});
+    return response.json({username: request.session.username, email: request.session.email});
 })
 
 app.get('/logoutuser', (request, response) => {
-  request.session.username = null;
-  request.session.email = null;
-  request.session.uuid = null;
-  return response.json({success: true});
+    request.session.username = null;
+    request.session.email = null;
+    return response.json({success: true});
 })
 
 app.get("/getoldtrips", async (request, response) => {
-  const oldtrips = await endpoint.getOldTrips(request.session.uuid);
-  return response.json({oldtrips: oldtrips});
+    if (request.session.email == null) {
+        return response.json([]);
+    }
+    const oldtrips = await endpoint.getOldTrips(request.session.email);
+    console.log("server oldtrips: ", oldtrips)
+    return response.json({oldtrips: oldtrips});
 })
 
 
 //allows server to listen on port 3000 on local network ip
 app.listen(1111, "0.0.0.0", () => {
-  console.log("Running.......")
+    console.log("Running.......")
 });
-
-

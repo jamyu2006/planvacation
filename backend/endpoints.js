@@ -1,9 +1,6 @@
 const uuidv4 = require('uuid').v4
 const { MongoClient, ServerApiVersion } = require('mongodb');
 require('dotenv').config();
-
-let users = {}
-
 const databasepassword = process.env.DATABASE_PASSWORD
 const adminKey = process.env.ADMIN_KEY
 
@@ -19,70 +16,46 @@ const client = new MongoClient(uri, {
 });
 
 async function testConnection() {
-  try {
-    await client.connect();
-    // Send a ping to confirm a successful connection
-    await client.db("admin").command({ ping: 1 });
-    console.log("Pinged your deployment. You successfully connected to MongoDB!");
-  } finally {
-    // Ensures that the client will close when you finish/error
-    //await client.close();
-  }
+    try {
+        await client.connect();
+        await client.db("admin").command({ ping: 1 });
+        console.log("Pinged your deployment. You successfully connected to MongoDB!");
+    } 
+    finally {
+
+    }
 }
 
-async function deleteAllDatabases(adminkey) {
+async function deleteCentralDatabase(adminkey) {
     try {
-
-        if(adminkey !== adminKey){
-            console.log("adminkey not valid")
-            return
+        if (adminkey !== adminKey) {
+            console.log("adminkey not valid");
+            return;
         }
-        // List all databases
-        const adminDb = client.db().admin();
-        const databases = await adminDb.listDatabases();
-
-        // Loop through each database and drop it
-        for (const database of databases.databases) {
-            const dbName = database.name;
-
-            // Skip system databases if needed
-            if (!['admin', 'config', 'local'].includes(dbName)) {
-                await client.db(dbName).dropDatabase();
-                console.log(`Dropped database: ${dbName}`);
-            }
-        }
-
-        console.log("All databases deleted successfully.");
-    } catch (error) {
-        console.error("Error deleting databases:", error);
-    } finally {
+        await client.db("central_data").dropDatabase();
+        console.log("Dropped the central_data database successfully.");
+    } 
+    catch (error) {
+        console.error("Error deleting central_data database:", error);
+    } 
+    finally {
         await client.close();
     }
 }
 
+
 async function createUser(username, email, password) {
     try {
-        // Check if the user already exists by email
-        const existingUser = Object.values(users).find(user => user.email === email);
+        const db = client.db("central_data");
+        const userCollection = db.collection("users");
+        const existingUser = await userCollection.findOne({email:email})
         if (existingUser) {
-            console.log("User with this email already exists.");
-            return null;
+            return false;
         }
-
-        const uuid = uuidv4()
-
-        users[uuid] = { username, email, password }
-        console.log("create user: ", users[uuid])
-
-        const db = client.db(uuid);
-        const collection = db.collection('info')
-
-        const result = await collection.insertOne({ username: username, email: email, password: password });
-        console.log('created database', uuid);
-        console.log('Inserted document with ID:', result.insertedId);
-
-        return uuid;
-    } catch (error) {
+        await userCollection.insertOne({email: email, username: username, password: password, trips: []});
+        return true;
+    } 
+    catch (error) {
         console.error("Error creating user:", error);
         throw error;
     }
@@ -90,65 +63,51 @@ async function createUser(username, email, password) {
 
 async function authenticateUser(email, password) {
     try {
-        const userExists = await (async () => {
-            for (const uuid of Object.keys(users)) {
-                if (users[uuid].email === email) {
-                    const db = client.db(uuid);
-                    const collection = db.collection('info');
-
-                    const dbUser = await collection.findOne({ email: email });
-                    console.log("Found password in database: ", dbUser.password, password);
-
-                    if (password === dbUser.password) {
-                        return {success: true, username: dbUser.username, email: dbUser.email, uuid: uuid};
-                    }
-                }
-            }
+        const db = client.db("central_data");
+        const userCollection = db.collection("users");
+        const existingUserWithCredentials = await userCollection.findOne({email:email, password:password});
+        if (existingUserWithCredentials) {
+            return {success: true, username: existingUserWithCredentials.username};
+        }
+        else {
             return {success: false};
-        })();
-
-        return userExists;  // Return true if user is authenticated, otherwise false
-    } catch (error) {
+        }
+    } 
+    catch (error) {
         console.error("Error in authenticateUser:", error);
-        return false;  // Return false if an error occurs during the authentication process
+        return false;
     }
 }
 
-async function createTrip(uuid, tripname, defaultlocation, triplocations) {
+async function createTrip(email, tripName, startingLocation, tripLocations) {
     try {
-        const db = client.db(uuid);
-        const collection = db.collection(tripname);
-
-        const result = await collection.insertOne({ locationname: defaultlocation.name, address: defaultlocation.address });
-        console.log('Inserted document with ID:', result.insertedId);
-        
-        await Promise.all(triplocations.map(async (location) => {
-            const locationResult = await collection.insertOne({
-                locationname: location.name,
-                address: location.address
-            });
-            console.log('Inserted additional location with ID:', locationResult.insertedId);
-        }));
-
+        const db = client.db("central_data");
+        const userCollection = db.collection("users");
+        const tripDetails = {tripName: tripName, startingLocation: startingLocation, tripLocations: tripLocations}
+        await userCollection.updateOne(
+            {email: email},
+            {$push: {trips: tripDetails}}
+        )
         return true;
-    } catch (error) {
+    } 
+    catch (error) {
         console.error("Error in createTrip:", error);
         return false;
     }
 }
 
 
-async function getOldTrips(uuid) {
+async function getOldTrips(email) {
     try {
-        const db = client.db(uuid);
-        const collections = await db.listCollections().toArray();
-        const trips = collections.filter(collection => collection.name != "info");
-        console.log("here are the trips: " + trips);
-        return trips;
-    } catch (error) {
+        const db = client.db("central_data");
+        const userCollection = db.collection("users");
+        const userData = await userCollection.findOne({email:email});
+        return userData.trips;
+    } 
+    catch (error) {
         console.error("Error finding old trips:", error);
-        return [];
+        throw error;
     }
 }
 
-module.exports = {testConnection, deleteAllDatabases, createUser, createTrip, authenticateUser, getOldTrips}
+module.exports = {testConnection, deleteCentralDatabase, createUser, createTrip, authenticateUser, getOldTrips}
