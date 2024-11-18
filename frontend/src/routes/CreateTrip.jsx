@@ -17,10 +17,10 @@ const CreateTrip = () => {
     const [tripLocationAutocomplete, setTripLocationAutocomplete] = useState(null);
     const navigate = useNavigate();
 
-    const { isLoaded } = useJsApiLoader({
+    const {isLoaded} = useJsApiLoader({
         googleMapsApiKey: key,
         libraries,
-    });
+    })
 
     const handleTripNameChange = (newTripName) => {
         setTripName(newTripName);
@@ -28,16 +28,16 @@ const CreateTrip = () => {
 
     const handleStartingLocationInputChange = (newStartingLocationInput) => {
         setStartingLocationInput(newStartingLocationInput);
-    };
+    }
 
     const handleTripLocationInputChange = (newTripLocationInput) => {
         setTripLocationInput(newTripLocationInput);
-    };
+    }
 
     const isValidLocation = (location) => {
         return new Promise((resolve, reject) => {
             const geocoder = new window.google.maps.Geocoder();
-            geocoder.geocode({ address: location }, (results, status) => {
+            geocoder.geocode({address: location}, (results, status) => {
                 if (status === 'OK' && results.length > 0) {
                     resolve(true);
                     return;
@@ -45,7 +45,7 @@ const CreateTrip = () => {
                 resolve(false);
             });
         });
-    };
+    }
 
     const addStartingLocation = async () => {
         const isLocationValid = await isValidLocation(startingLocationInput);
@@ -54,7 +54,7 @@ const CreateTrip = () => {
             return;
         }
         alert('The starting location you entered could not be found');
-    };
+    }
 
     const addTripLocation = async () => {
         const isLocationValid = await isValidLocation(tripLocationInput);
@@ -63,16 +63,26 @@ const CreateTrip = () => {
             return;
         }
         alert('The trip location you entered could not be found');
-    };
+    }
 
     const handleStartingLocationPlaceChanged = () => {
         const place = startingLocationAutocomplete.getPlace();
         setStartingLocationInput(place.formatted_address);
-    };
+    }
 
     const handleTripLocationPlaceChanged = () => {
         const place = tripLocationAutocomplete.getPlace();
         setTripLocationInput(place.formatted_address);
+    }
+
+    const handleCalculateRoutes = () => {
+        if (tripName === '' || startingLocation === '' || tripLocations.length === 0) {
+            alert("Some sections are blank, or no locations have been added");
+            return;
+        }
+        navigate('/view-possible-routes', { 
+            state: {startingLocation, tripLocations}
+        });
     };
 
     const handleSaveTrip = () => {
@@ -115,7 +125,7 @@ const CreateTrip = () => {
                         </Autocomplete>
                         <button onClick={addStartingLocation}>Add</button>
                     </div>
-                    <h3>Enter All Additional Locations You Would Like to Journey</h3>
+                    <h3>Enter All Additional Locations You Would Like to Journey, In Order</h3>
                     <div className="input-container">
                         <Autocomplete onLoad={(autocomplete) => setTripLocationAutocomplete(autocomplete)} onPlaceChanged={handleTripLocationPlaceChanged}>
                             <input value={tripLocationInput} onChange={(event) => handleTripLocationInputChange(event.target.value)} />
@@ -130,14 +140,15 @@ const CreateTrip = () => {
                 <h5>{startingLocation ? (`${startingLocation} (Starting Location)`) : ('Starting Location has not been added yet')}</h5>
                 <h5>{tripLocations.length == 0 ? ("No destinations have been added") : ('')}</h5>
                 {tripLocations.map((location, index) => (
-                    <h5 key={index}>{location}</h5>
+                    <h5 key={index}>Location {index+2}: {location}</h5>
                 ))}
             </div>
             <div className='create-trip-options'>
+                <button onClick={handleCalculateRoutes}>Calculate All Possible Pathways</button>
                 <button onClick={handleSaveTrip}>Save Trip And Return To Home</button>
             </div>
         </div>
-    );
-};
+    )
+}
 
 export default CreateTrip;

@@ -4,6 +4,7 @@ import Signup from "./routes/Signup.jsx";
 import Home from "./routes/Home.jsx";
 import CreateTrip from "./routes/CreateTrip.jsx"
 import ViewTrip from "./routes/ViewTrip.jsx"
+import ViewPossibleRoutes from "./routes/ViewPossibleRoutes.jsx";
 
 import { Route, createBrowserRouter, createRoutesFromElements, RouterProvider } from "react-router-dom";
 
@@ -17,6 +18,7 @@ const router = createBrowserRouter(
             {/* TO DO HAVE EACH TRIP BE ITS OWN VIEWTRIP INDEX */}
             <Route path = "/home/viewtrip" element = {<ViewTrip/>}/>
             <Route path= "/create-trip" element = {<CreateTrip/>}/>
+            <Route path= "/view-possible-routes" element = {<ViewPossibleRoutes />}/>
         </>
     )
 );
