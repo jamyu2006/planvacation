@@ -46,24 +46,15 @@ const useAllPossibleRoutes = (startingLocation, tripLocations) => {
         ];
 
         const fetchRoutes = async () => {
-
-            //initialize empty list for all routes
             const newRoutes = [];
-
-            // this iterates through the trip locations
             for (let i = 0; i < tripLocations.length; i++) {
                 const origin = (i === 0) ? startingLocation : tripLocations[i-1];
                 const destination = tripLocations[i];
                 const segmentObject = {driving: [], walking: [], bicycling: [], transit: []};
-
-                // this iterates through the modes of transportation for each segment
                 for (let modeOfTransportation of modesOfTransportation) {
-
-                    //finds all possible routes in that segment for that mode of transportation
                     const possibleRoutes = await getAllRoutes(modeOfTransportation, origin, destination, directionsService);
                     segmentObject[modeOfTransportation.toLowerCase()] = possibleRoutes;
                 }
-
                 newRoutes.push(segmentObject);
             }
             setRoutes(newRoutes);
@@ -71,8 +62,6 @@ const useAllPossibleRoutes = (startingLocation, tripLocations) => {
         fetchRoutes();
     }, [isLoaded, startingLocation, tripLocations]);
 
-
-    // returns the state
     return [routes, setRoutes];
 }
 

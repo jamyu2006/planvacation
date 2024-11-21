@@ -1,0 +1,780 @@
+﻿<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd"><html><head></head><body>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<div class="WordSection1">
+
+<h2 align="center" style="margin:0in;margin-bottom:.0001pt;text-align:center;"><span><img width="244" height="121" src="https://www3.cs.stonybrook.edu/~cse214/images/logo.gif" alt="http://www.cs.stonybrook.edu/~cse214/images/logo.gif"/></span><span style="color:purple;"><br/>
+</span><span style="font-family:&quot;Arial&quot;,sans-serif;color:maroon;">HOMEWORK 6-
+Fall 2024</span><span style="font-size:12.0pt;"></span></h2>
+
+<h2 align="center" style="margin:0in;margin-bottom:.0001pt;text-align:center;"><span style="font-size:12.0pt;">
+
+<hr size="2" width="100%" align="center"/>
+
+</span></h2>
+
+<h3 style="margin-top:0in;margin-right:0in;margin-bottom:12.0pt;margin-left:
+0in;"><strong><span style="font-size:14.0pt;font-family:&quot;Arial&quot;,sans-serif;">HOMEWORK
+6 - due Tuesday, November 19th no later than 7:00PM</span></strong><span style="font-size:14.0pt;font-family:&quot;Arial&quot;,sans-serif;"></span></h3>
+
+<p style="margin-top:0in;margin-right:0in;margin-bottom:12.0pt;margin-left:
+0in;"><strong><span style="font-size:13.0pt;font-family:&quot;Arial&quot;,sans-serif;">REMINDERS:
+</span></strong><b><span style="font-size:13.0pt;font-family:&quot;Arial&quot;,sans-serif;"></span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;">Submit your files only via CodeGrade on the Content page in Brightspace. Access CodeGrade by clicking <a rel="noopener" href="https://mycourses.stonybrook.edu/d2l/le/content/1414340/viewContent/39593571/View">&quot;HW6 - CODEGRADE SUBMISSION LINK&quot;</a> for your submission.</span></b><span style="font-size:12.0pt;"></span></li>
+
+<li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;">Use of a package is optional. If you wish to use it, make sure to name it &quot;hw6&quot; (all in lowercase). Otherwise, you will lose points.</span></b><span style="font-size:12.0pt;"></span></li>
+
+<li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;"><span style="color:red;">If your program doesn&#39;t run on CodeGrade or if your score on CodeGrade is less than 50%, the maximum grade you can receive for this assignment is 85.</span></span></b><span style="font-size:12.0pt;"></span></li>
+
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;">Be sure your code
+     follows the <span class="MsoHyperlink"><a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/codingstyle.htm" target="_blank">coding
+     style</a></span> for CSE214.</span></b><span style="font-size:12.0pt;"></span></li>
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;">Make sure you read
+     the warnings about <span class="MsoHyperlink"><a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/courseinfo.htm" target="_blank">academic
+     dishonesty</a></span>. <i>Remember, all work you submit for homework or
+     exams MUST be your own work.</i></span></b><span style="font-size:12.0pt;"></span></li>
+ 
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;color:green;">You
+     may use (and are encouraged to use) any Java API Data Structures you like
+     to implement this assignment.</span></b><span style="font-size:12.0pt;"></span></li>
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:12.0pt;font-family:&quot;Arial&quot;,sans-serif;">You may use
+     Scanner, InputStreamReader, or any other class that you wish for keyboard
+     input and file I/O.</span></b><span style="font-size:12.0pt;"></span></li>
+</ul>
+
+<div style="margin-top:12.0pt;margin-bottom:8.0pt;">
+
+<div class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal;"><span style="font-size:12.0pt;font-family:
+&quot;Times New Roman&quot;,serif;">
+
+<hr size="2" width="100%" align="center"/>
+
+</span></div>
+
+</div>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">In
+published literature (and college essays), there will oftentimes come up the
+issue of ghost-writing -- hiring someone to write a piece for you
+and then putting your own name on it to take credit. Most notably, this has
+been studied with Shakespeare’s works, which were under scrutiny for being too
+large in quantity for one person to write alone. In order to test this, there’s a
+rather simple method used to calculate the similarity of two texts, relying on
+the frequencies of certain words used.</span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">In this assignment, you will be
+creating a program which iterates through a folder of text files and uses this
+method to determine whether or not each text’s author is the same as the author
+of another text. The basic outline of the method is that the program will read
+each file, tally up the number of occurrences of each word (within a certain
+range of frequency, explained below) using a hash table, and then use the cosine
+method (see below) between each pair of hash tables to determine whether or not
+they have the same author. This will then be presented to the user at the end
+of the sequence.</span></b></p>
+
+<div style="margin-top:12.0pt;margin-bottom:8.0pt;">
+
+<div class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal;"><span style="font-size:12.0pt;font-family:
+&quot;Times New Roman&quot;,serif;">
+
+<hr size="2" width="100%" align="center"/>
+
+</span></div>
+
+</div>
+
+<p class="MsoNormal" style="line-height:normal;"><b><u><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Hashtable AND HashMap:</span></u></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">In this assignment, you may either
+implement your own hashing function or implement the provided Hashtable or
+HashMap classes for the FrequencyTable class. Both Hashtable and HashMap
+function very similarly: by mapping a value to a key using the put(key, value)
+method, and accessing that same value via the key using the get(key) method.
+Though they are almost identical for the purposes of this assignment, the most
+relevant difference is that while a HashMap may allow for one null key and as
+many null values as the user wants, a Hashtable will not allow for <i>any</i> null keys or values. Though the end
+result will be the same in this assignment, watch out for that discrepancy when
+testing your program. <span>If you would like
+to know more about either of these classes, you should read the Oracle
+documentation for <span class="MsoHyperlink"><b><a rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/Hashtable.html"><span class="SpellE">java.util.Hashtable</span></a></b></span> and <span class="MsoHyperlink"><b><a rel="noopener" href="https://docs.oracle.com/javase/8/docs/api/java/util/HashMap.html"><span class="SpellE">java.util.HashMap</span></a></b></span>.</span></span></p>
+
+<hr/>
+
+<p class="MsoNormal" style="line-height:normal;"><b><u><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">SAMPLE TEXTS:</span></u></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">These
+are the texts used in the sample I/O below. The algorithm will obviously also
+work on other pieces, but be aware that certain authors may vary their language
+enough from piece to piece to fly under the radar, so to speak. <a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/passageFolder.zip">Click here to download.</a></span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span class="MsoHyperlink"><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"><a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/ANightAmongNihilists.txt">“A Night Among Nihilists” by Sir Arthur Conan
+Doyle</a></span></b></span><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span class="MsoHyperlink"><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"><a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/ThatLittleSquareBox.txt">“That Little Square Box” by Sir Arthur Conan
+Doyle</a></span></b></span><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span class="MsoHyperlink"><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"><a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/CallOfCthulhu.txt">“Call of Cthulhu” by H.P. Lovecraft</a></span></b></span><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"></span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span class="MsoHyperlink"><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"><a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/ColourOutOfSpace.txt">“The Colour Out of Space” by H.P. Lovecraft</a></span></b></span><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"></span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span class="MsoHyperlink"><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"><a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/Frankenstein.txt">Excerpt from “Frankenstein”<span>&#160; </span>by Mary Shelley</a></span></b></span><b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"></span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;color:red;">NOTE:</span></b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;color:red;"> </span><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">DO NOT COUNT SIMILAR WORDS AS DIFFERENT WORDS</span></b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"> (“had.” and “had,” should be counted as the same word, so
+should “Hello” and “hello”. <b>Remove punctuation and capitalization in order for
+    your algorithm to work to its fullest extent.</b>)</span></p>
+
+<hr/>
+<p class="MsoNormal" style="line-height:normal;"><b><u><span style="font-size:
+13.0pt;font-family:&quot;Times New Roman&quot;,serif;">“STOP
+WORDS”:</span></u></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Every
+text will have a large amount of similar words (“a”, “the”, “not”, etc.) called
+“stop words,” which are typically excluded from these kinds of algorithms in
+order to prevent exceeding similarity percentages where there should be none.
+Below is a long list of stop words for you to implement (or rather, <i>not</i> implement) in your calculations. For
+your convenience, punctuation and capitalization has already been audited and the list
+is formatted properly, as this assignment isn’t testing your skill with writing
+long lists. <a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/StopWords">Click here to download.</a></span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">You
+can find the list here: <span class="MsoHyperlink"><b><a rel="noopener" href="http://www.cs.stonybrook.edu/~cse214/hw/hw6-files/StopWords.txt">StopWords.txt</a></b></span></span></p>
+
+<hr/>
+<p class="MsoNormal" style="line-height:normal;"><b><u><span style="font-size:
+13.0pt;font-family:&quot;Times New Roman&quot;,serif;">ITERATING
+THROUGH A DIRECTORY:</span></u></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Instead
+of taking individual file names, which would take a very long time with a large
+number of files, we’ll be iterating through a folder filled with text files, so
+we only need to have one directory specified. This is done with</span></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Courier New&quot;;">File[]
+directoryOfFiles = new File(directoryPath).listFiles();</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Courier New&quot;;">for(File
+i : directoryOfFiles){</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Courier New&quot;;">//your
+code goes here</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Courier New&quot;;">}</span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">which
+creates a list of the contents in the specified path. After this, a simple for
+loop iterating through directoryOfFiles is an easy way to access each file
+individually, from which you will read the file using classes of your choice.</span></p>
+
+<hr/>
+
+<p class="MsoNormal" style="line-height:normal;"><b><u><span style="font-size:
+13.0pt;font-family:&quot;Times New Roman&quot;,serif;">COSINE
+FORMULA (ANGLE BETWEEN TWO VECTORS):</span></u></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">After we count the occurrences of each word between two
+texts, we can analogize the two lists of values to two n-dimensional vectors
+(where n is the number of words being counted). With two n-dimensional vectors
+(two n-length lists of numbers), there is a formula to determine the angle between
+the vectors <i>u </i>and <i>v</i>:</span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:11.0pt;line-height:106%;font-family:&quot;Calibri&quot;,sans-serif;"><img width="130" height="41" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/image004.png"/></span><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">where </span><span style="font-size:11.0pt;line-height:106%;font-family:&quot;Calibri&quot;,sans-serif;position:relative;top:4.0pt;"><img width="11" height="22" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/image006.png"/></span><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"><span>&#160;</span>is the angle between
+the two vectors u and v, and taking the cosine <span class="GramE">cos(</span></span><span style="font-size:11.0pt;line-height:106%;font-family:&quot;Calibri&quot;,sans-serif;position:relative;top:4.0pt;"><img width="11" height="22" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/image006.png"/></span><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">) will give a value between -1 (an angle of 180)<span>&#160; </span>and 1 (the angle is minimal or nonexistent). When
+there is more than one dimension in each vector, this formula can be expanded
+to:</span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:11.0pt;line-height:106%;font-family:&quot;Calibri&quot;,sans-serif;"><img width="404" height="50" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/image008.png"/></span><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Similarly
+to how we analogized the lists of word occurrences as vectors, we can analogize
+the result of this equation <span class="GramE">cos(</span></span><span style="font-size:11.0pt;line-height:106%;font-family:&quot;Calibri&quot;,sans-serif;position:relative;top:4.0pt;"><img width="11" height="22" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/image006.png"/></span><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">) to be the “similarity” between these two texts, where the
+value 0 means that no word which appears in one text appears in the other text,
+and 1 means that the texts have exactly the same frequency ratio of each word. For
+the purposes of this assignment, there will never be negative values (because
+you can’t count a word into the negatives).<span></span></span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">In
+the context of this assignment, <i>u</i> and
+<i>v</i> are the collections of frequencies
+of specific words in each text. For example, if a given word was found 40 times
+in a 1,000-word text, and 3 times in another 500-word text, </span><span style="font-size:11.0pt;line-height:106%;font-family:&quot;Calibri&quot;,sans-serif;position:relative;top:4.0pt;"><img width="17" height="22" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/image010.png"/></span><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"><span>&#160;</span>would be 40/1000 and </span><span style="font-size:11.0pt;line-height:106%;font-family:&quot;Calibri&quot;,sans-serif;position:relative;top:4.0pt;"><img width="17" height="22" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/image012.png"/></span><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"><span>&#160;</span>would be 3/500,
+repeated for each other word that was counted (note: occasionally there will be
+0 occurrences of a given word in one text and &gt;0 in another, and these would
+multiply to 0, which is intentional).<span></span></span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Typically,
+texts with the same author will be roughly 50-60% similar, sometimes more,
+whereas texts with different authors will typically be 30-40% similar, or
+lower.</span></p>
+
+<div class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal;"><span style="font-size:12.0pt;font-family:
+&quot;Times New Roman&quot;,serif;">
+
+<hr size="2" width="100%" align="center"/>
+
+</span></div>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:18.0pt;font-family:&quot;Times New Roman&quot;,serif;">Required Classes</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">The following sections describe classes
+which are required for this assignment. Each section provides a description and
+the specifications necessary to complete each class. If you feel that
+additional methods would be useful, feel free to add them during your
+implementation as you see fit. However, all the variables and methods in the
+following specifications must be included in your project.</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal;"><b><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;"><img border="0" width="1235" height="617" src="http://www.cs.stonybrook.edu/~cse214/hw/hw6-images/hw6-uml.png"/></span></b><b><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></p>
+
+<p class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal;"><b><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;">UML
+Diagram</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:15.0pt;font-family:&quot;Times New Roman&quot;,serif;">1. Passage</span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Write
+a fully-documented class named Passage that is a hash table which maps a String (word) to an Integer value (occurences of that word). This will represent a single text file and all of its words’
+occurrences. The Passage class will, when constructed, parse a text file and
+count up the occurrences of every word (excluding stop words)</span></b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public <span class="GramE">Passage(</span>String title,
+     File file) – constructor which sets the title of the Passage and calls the
+     <span class="SpellE">parseFile</span>() method</span></b></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">A String member variable: </span></b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">title - the title of the Passage</span></b></li>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">An int member variable: </span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><span class="SpellE"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">wordCount - the number of total words occuring in this Passage, excluding stop words</span></b></span><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></li>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">A Hashtable or HashMap &lt;String, Double&gt;: </span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><span class="SpellE"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">similarTitles - a collection which contains other Passages and the similarity percentage between this Passage and each other Passage</span></b></span><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></li>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public void <span class="SpellE"><span class="GramE">parseFile</span></span><span class="GramE">(</span>File file)</span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Brief:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Reads the given text file and counts each word’s
+       occurrence, excluding stop words, and inserts them into the table</span></b></li>
+  </ul>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public <span style="color:red;">static</span> double <span class="SpellE"><span class="GramE">cosineSimilarity</span></span><span class="GramE">(</span>Passage passage1, Passage passage2)</span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Brief:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Calculates the similarity between two Passage objects
+       using the formula above and modifies their <span class="SpellE">similarTitles</span>
+       accordingly</span></b></li>
+  </ul>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public double <span class="SpellE"><span class="GramE">getWordFrequency</span></span><span class="GramE">(</span>String word) – returns the <i>relative</i> frequency of the given word in this Passage (occurrences/<span class="SpellE">wordCount</span>)</span></b></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public Set&lt;String&gt; <span class="SpellE"><span class="GramE">getWords</span></span><span class="GramE">(</span>) – returns a Set
+     containing all of the words in this Passage</span></b></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public String <span class="GramE">toString(</span>) -
+     returns string of similar titles and their percentage similarity</span></b></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Getters and setters for all data members.</span></b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:15.0pt;font-family:&quot;Times New Roman&quot;,serif;">2. <span class="SpellE">FrequencyList</span></span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">The
+frequencies of each given word in each text will be stored in an extension of <span class="SpellE">ArrayList</span>&lt;Integer&gt;. When constructed, this class will
+search through the passed <span class="SpellE">ArrayList</span> of Passages and
+find the occurrences of its given word in each Passage object, constructing an
+Integer list as well as a <span class="SpellE">Hashtable</span>/Map which will
+map Passage titles to their index in said Integer list- if (“Frankenstein”, 2)
+appears in the table, then <span class="SpellE"><span class="GramE">FrequencyList.get</span></span><span class="GramE">(</span>2) will return whatever value corresponds to “Frankenstein”.
+This class will contain a String member variable corresponding to <span class="SpellE">its</span> word that it’s keeping track of, and because some texts
+will have words that other texts don’t contain, this class will only hold the
+values which are greater than 0 to avoid taking up unnecessary space.</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;color:red;">Note: </span></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">You can store the frequency as doubles instead of the number
+of occurrences as integers (i.e. if there are 1,000 words in a text and 30
+occurrences of a given word, you can store either 30 or 0.03; you will need the
+frequency regardless).</span></b></p>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public <span class="SpellE"><span class="GramE">FrequencyList</span></span><span class="GramE">(</span>String word, <span class="SpellE">ArrayList</span>&lt;Passage&gt;
+     passages)</span></b></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"><span>&#160;</span></span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">A String member variable: </span></b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">word - the word this FrequencyList represents</span></b></li>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">An <span class="SpellE">ArrayList</span>&lt;Integer&gt;:</span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">frequencies - stores the frequency of the word as it relates to each Passage</span></b></li>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">A <span class="SpellE">Hashtable</span> or HashMap
+     &lt;String, Integer&gt;: </span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><span class="SpellE"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">passageIndices - a collection of the title of each Passage and it&#39;s corresponding entry in the ArrayList. If a Passage is not represented in this collection, it means that the Passage does not contain the word this FrequencyList represents.</span></b></span><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></li>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public void <span class="SpellE"><span class="GramE">addPassage</span></span><span class="GramE">(</span>Passage p)</span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Brief</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">:</span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Adds a Passage to this <span class="SpellE">FrequencyList</span></span></b></li>
+  </ul>
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Postconditions</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">:</span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><span class="SpellE"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">passageIndices</span></b></span><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"> now contains p’s title which maps to the next
+       available index in this <span class="SpellE">ArrayList</span></span></b></li>
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">The <span class="SpellE">ArrayList</span> now contains
+       an additional index containing the frequency of “word” in the Passage</span></b></li>
+  </ul>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public int <span class="SpellE"><span class="GramE">getFrequency</span></span><span class="GramE">(</span>Passage p) – returns the frequency of “word” in the
+     given Passage, 0 if the Passage is not contained in this <span class="SpellE">FrequencyList</span></span></b></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:15.0pt;font-family:&quot;Times New Roman&quot;,serif;">3. FrequencyTable</span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">While
+individual words and their frequencies across texts will be stored in <span class="SpellE">FrequencyList</span> objects, these <span class="SpellE">FrequencyLists</span>
+will be stored in an encompassing <span class="SpellE">FrequencyTable</span>
+class which extends a Collection of your choice (<span class="SpellE">ArrayList</span>,
+LinkedList, etc.). This class will contain a Collection of <span class="SpellE">FrequencyLists</span>
+and a static method which builds each <span class="SpellE">FrequencyList</span> from
+a list of Passage objects, as well as a method to access the frequency of a
+word in a given Passage.</span></b><span style="font-size:13.0pt;font-family:
+&quot;Times New Roman&quot;,serif;"></span></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public <span style="color:red;">static</span> <span class="SpellE">FrequencyTable</span> <span class="SpellE">buildTable</span> (<span class="SpellE">ArrayList</span>&lt;Passage&gt; passages)</span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Brief:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">
+      </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Iterates through passages and constructs <span class="SpellE">FrequencyLists</span> with each Passage’s appropriate word
+       frequencies</span></b></li>
+  </ul>
+ </ul>
+</ul>
+<ul style="margin-top:0in;" type="disc">
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Parameters:</span></i></b><b><span style="font-size:
+      13.0pt;font-family:&quot;Times New Roman&quot;,serif;">
+      </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">passages – a collection containing the Passage objects to be
+       parsed through</span></b></li>
+  </ul>
+ </ul>
+</ul>
+<ul style="margin-top:0in;" type="disc">
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Postconditions:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"> </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">A new <span class="SpellE">FrequencyTable</span> object
+       has been constructed, containing a Collection of <span class="SpellE">FrequencyLists</span>
+       with information from all Passages</span></b></li>
+  </ul>
+ </ul>
+</ul>
+<ul style="margin-top:0in;" type="disc">
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Returns:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">
+      </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">The FrequencyTable constructed from each Passage in
+       passages.</span></b></li>
+  </ul>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public void <span class="SpellE"><span class="GramE">addPassage</span></span><span class="GramE">(</span>Passage p) throws <span class="SpellE">IllegalArgumentException</span></span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Brief:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Adds a Passage into the <span class="SpellE">FrequencyTable</span>
+       and updates the <span class="SpellE">FrequencyLists</span> accordingly</span></b></li>
+  </ul>
+ </ul>
+</ul>
+<ul style="margin-top:0in;" type="disc">
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Parameters:</span></i></b><b><span style="font-size:
+      13.0pt;font-family:&quot;Times New Roman&quot;,serif;">
+      </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">p – the Passage being iterated over and integrated
+       into the table.</span></b></li>
+  </ul>
+ </ul>
+</ul>
+<ul style="margin-top:0in;" type="disc">
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Preconditions:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"> </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">The Passage p is neither null nor empty.</span></b></li>
+  </ul>
+ </ul>
+</ul>
+<ul style="margin-top:0in;" type="disc">
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Postconditions:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"> </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">p’s values for each of its keys have been
+       appropriately mapped into each <span class="SpellE">FrequencyList</span>
+       in the table.</span></b></li>
+  </ul>
+ </ul>
+</ul>
+<ul style="margin-top:0in;" type="disc">
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><i><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Throws:</span></i></b><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">
+      </span></b></li>
+  <ul style="margin-top:0in;" type="square">
+   <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">IllegalArgumentException: If the given Passage is
+       null or empty.</span></b></li>
+  </ul>
+ </ul>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public int <span class="SpellE"><span class="GramE">getFrequency</span></span><span class="GramE">(</span>String word, Passage p) - returns the frequency of the
+     given word in the given Passage.</span></b></li>
+</ul>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:12.0pt;font-family:&quot;Times New Roman&quot;,serif;">&#160;</span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:15.0pt;font-family:&quot;Times New Roman&quot;,serif;">4. TextAnalyzer</span></b></p>
+
+<p class="MsoNormal" style="line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">Write
+a fully-documented class named TextAnalyzer. The user should be prompted to
+enter the directory of a folder on startup— this is the directory that the
+program will iterate through the contents of and, after determining the
+relations between each Passage object (whether or not they have the same author
+and by what percentage), print a table showing how similar each text is to others.
+Finally, it should attempt to determine which texts were written by the same author.
+
+
+ 
+For this assignment, if the passages are at least X% similar, there is a good 
+chance they were written by the same author. A higher similarity percentage 
+increases the likelihood of this being correct. Just replace &#39;X&#39; with the 
+percentage the user provides. 
+ 
+<p style="color:red;"> 
+<i>
+Note: The filenames in the output must be printed in alphabetical order to match the
+ expected output in CodeGrade. This includes the names of text filenames 
+ (which should be sorted by Java anyway), the files printed in the Similarities 
+ column, and the strings listed under Suspected Texts With Same Authors.
+ You can use any of the Java AI sorting methods, such as Arrays.sort or 
+ Collections.sort. 
+
+</i>
+</p> 
+ 
+</span></b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;"></span></p>
+
+<ul style="margin-top:0in;" type="disc">
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">A FrequencyTable member variable: </span></b></li>
+ <ul style="margin-top:0in;" type="circle">
+  <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">frequencyTable</span></b></li>
+ </ul>
+ <li class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+     normal;"><b><span style="font-size:13.0pt;font-family:&quot;Times New Roman&quot;,serif;">public static void <span class="GramE">main(</span>String[]
+     args) </span></b></li>
+</ul>
+
+<div style="margin-top:12.0pt;margin-bottom:8.0pt;">
+
+<div class="MsoNormal" align="center" style="margin-bottom:0in;margin-bottom:.0001pt;text-align:center;line-height:normal;"><span style="font-size:12.0pt;font-family:
+&quot;Times New Roman&quot;,serif;">
+
+<hr size="2" width="100%" align="center"/>
+
+</span></div>
+
+</div>
+
+<p class="MsoNormal" style="margin-bottom:0in;margin-bottom:.0001pt;line-height:
+normal;"><b><span style="font-size:18.0pt;font-family:&quot;Times New Roman&quot;,serif;"><b><u>SAMPLE I/O</u></b></span></b></p>
+
+<b>
+<pre>
+
+<font color="green">// Comments in green,</font> <font color="red">input in red, </font><font color="black">output in black</font>
+
+Enter the similarity percentage: <font color="red">0.55</font>
+Enter the directory of a folder of text files: <font color="red">C:\Users\student\Documents\passageFolder</font>
+
+<font color="green">// Note: After reading the percentage, remember to use input.nextLine() to skip to the next line before reading the folder name.</font>
+
+
+Reading texts...
+
+<font color="green">// Notify the user if the program runs into any exceptions or errors.</font>
+
+Text (title)             | Similarities (%)
+--------------------------------------------------------------------------------
+ANightAmongNihilists     | CallOfCthulhu(45%), Frankenstein(42%),
+                         | ThatLittleSquareBox(63%), TheColourOutOfSpace(44%)
+--------------------------------------------------------------------------------
+CallOfCthulhu            | ANightAmongNihilists(45%), Frankenstein(46%),
+                         | ThatLittleSquareBox(47%), TheColourOutOfSpace(59%)
+--------------------------------------------------------------------------------
+Frankenstein             | ANightAmongNihilists (42%), CallOfCthulhu(46%),
+                         | ThatLittleSquareBox(44%), TheColourOutOfSpace(46%)
+--------------------------------------------------------------------------------
+ThatLittleSquareBox      | ANightAmongNihilists(63%), CallOfCthulhu(47%),
+                         | Frankenstein(44%), TheColourOutOfSpace(47%)
+--------------------------------------------------------------------------------
+TheColourOutOfSpace      | ANightAmongNihilists(44%), CallOfCthulhu(59%),
+                         | Frankenstein(46%), ThatLittleSquareBox(47%) 
+
+Suspected Texts With Same Authors
+--------------------------------------------------------------------------------
+&#39;ANightAmongNihilists&#39; and &#39;ThatLittleSquareBox&#39; may have the same author (63% similar).
+&#39;CallOfCthulhu&#39; and &#39;TheColourOutOfSpace&#39; may have the same author (59% similar).
+<font color="green">
+// For those that don&#39;t know, &quot;A Night Among Nihilists&quot; and
+// &quot;That Little Square Box&quot; are both written by Sir Arthur Conan Doyle, and
+// &quot;Call of Cthulhu&quot; and &quot;The Colour Out of Space&quot; are both written by
+// H.P. Lovecraft, while &quot;Frankenstein&quot; is written by Mary Shelley.</font>
+
+Program terminating...
+
+
+Enter the similarity percentage: <font color="red">0.60</font>
+Enter the directory of a folder of text files: <font color="red">C:\Users\student\Documents\passageFolder</font>
+
+Reading texts...
+
+<font color="green">// Notify the user if the program runs into any exceptions or errors.</font>
+
+Text (title)             | Similarities (%)
+--------------------------------------------------------------------------------
+ANightAmongNihilists     | CallOfCthulhu(45%), Frankenstein(42%),
+                         | ThatLittleSquareBox(63%), TheColourOutOfSpace(44%)
+--------------------------------------------------------------------------------
+CallOfCthulhu            | ANightAmongNihilists(45%), Frankenstein(46%),
+                         | ThatLittleSquareBox(47%), TheColourOutOfSpace(59%)
+--------------------------------------------------------------------------------
+Frankenstein             | ANightAmongNihilists (42%), CallOfCthulhu(46%),
+                         | ThatLittleSquareBox(44%), TheColourOutOfSpace(46%)
+--------------------------------------------------------------------------------
+ThatLittleSquareBox      | ANightAmongNihilists(63%), CallOfCthulhu(47%),
+                         | Frankenstein(44%), TheColourOutOfSpace(47%)
+--------------------------------------------------------------------------------
+TheColourOutOfSpace      | ANightAmongNihilists(44%), CallOfCthulhu(59%),
+                         | ThatLittleSquareBox(47%), Frankenstein(46%)
+
+Suspected Texts With Same Authors
+--------------------------------------------------------------------------------
+&#39;ANightAmongNihilists&#39; and &#39;ThatLittleSquareBox&#39; may have the same author (63% similar).
+
+
+Program terminating...
+</pre>
+
+</b></div><b>
+<br/>
+<hr/>
+	<p align="center">
+	  <font face="Arial" color="#800000"><strong><a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/courseinfo.htm">Course
+	  Info</a> | <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/schedule.htm">Schedule</a>
+	  | <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/sections.htm">Sections</a>
+	  | <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/index.html">Announcements</a>
+	  | <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/homework.htm">Homework</a>
+	  | <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/exams.htm">Exams</a> |
+	  <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/help.htm">Help/FAQ</a> |
+	  <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/grades.htm">Grades</a> |
+	  <a rel="noopener" href="http://www.cs.sunysb.edu/~cse214/index.html">HOME</a></strong></font>
+
+	</p><br/>
+</b><b>
+
+</b><b>
+</b><script type="module" src="https://s.brightspace.com/lib/bsi/2024.11.267/unbundled/mathjax.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+						if (document.querySelector('math') || /\$\$|\\\(|\\\[|\\begin{|\\ref{|\\eqref{/.test(document.body.innerHTML)) {
+							document.querySelectorAll('mspace[linebreak="newline"]').forEach(elm => {
+								elm.setAttribute('style', 'display: block; height: 0.5rem;');
+							});
+
+							window.D2L.MathJax.loadMathJax({
+								outputScale: 1.5,
+								renderLatex: true,
+								enableMML3Support: false
+							});
+						}
+					});</script><script type="module" src="https://s.brightspace.com/lib/bsi/2024.11.267/unbundled/prism.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					document.querySelectorAll('.d2l-code').forEach(code => {
+						window.D2L.Prism.formatCodeElement(code);
+					});
+				});</script><script type="module" src="https://s.brightspace.com/lib/bsi/2024.11.267/unbundled/embeds.js"></script><script type="text/javascript">document.addEventListener('DOMContentLoaded', function() {
+					window.D2L.EmbedRenderer.renderEmbeds(document.body);
+				});</script></body></html>

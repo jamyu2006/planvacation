@@ -74,7 +74,7 @@ const Home = () => {
             <div>
                 {oldTrips.map((element, index) => {
                     return(
-                        <div className="trip-box-container">
+                        <div className="trip-box-container" key={index}>
                             <TripBox 
                                 tripInformation={element} 
                             />

@@ -80,9 +80,20 @@ const CreateTrip = () => {
             alert("Some sections are blank, or no locations have been added");
             return;
         }
-        navigate('/view-possible-routes', { 
-            state: {startingLocation, tripLocations}
-        });
+        const tripInfo = { tripName: tripName, startingLocation: startingLocation, tripLocations: tripLocations };
+        axios.post("http://localhost:1111/createTrip", tripInfo)
+            .then((response) => {
+                if (response.data) {
+                    navigate('/view-possible-routes', { 
+                        state: {startingLocation, tripLocations}
+                    });
+                }
+                else {
+                    alert("A problem occurred with saving the trip and calculating routes");
+                    navigate("/home");
+                }
+            })
+            .catch(error => console.error("Error posting info:", error));
     };
 
     const handleSaveTrip = () => {
